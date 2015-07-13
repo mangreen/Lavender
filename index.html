@@ -3,6 +3,13 @@
 	<meta charset="UTF-8">
 	<title>lavender 測試 landing page</title>
 	<script>
+		function getSearchStr(name) {
+		    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+		    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+		        results = regex.exec(location.search);
+		    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+		}
+		
 		var query = {
 			rl: document.referrer,
 			sr: screen.width + "x" + screen.height, // screen resolution
@@ -16,6 +23,8 @@
 		};
 		
 		console.log(query);
+		
+		console.log("qs test", getSearchStr("test"));
 	</script>
 </head>
 <html>
