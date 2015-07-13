@@ -1,4 +1,24 @@
 <!DOCTYPE html>
+<head>
+	<meta charset="UTF-8">
+	<title>lavender 測試 landing page</title>
+	<script>
+		var query = {
+			url: window.location.href,
+			rl: document.referrer,
+			sr: screen.width + "x" + screen.height, // screen resolution
+			dl: window.location.href, // ex. http://psk_.com/about
+			dp: window.location.pathname, // ex. /about
+			ul: navigator.language || navigator.userLanguage, //user langage
+			sd: screen.colorDepth + "-bit", // color depth
+			dt: document.title, // html title
+			ctime: (new Date()).toISOString(), // client timestamp
+			z: Math.random() // cache buster,
+		};
+		
+		console.log(query);
+	</script>
+</head>
 <html>
 	<body>
 		<button type="button" onclick="console.log('button clicked')">Click Me!</button>
