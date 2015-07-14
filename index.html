@@ -17,8 +17,7 @@
 	  			var separator = uri.indexOf('?') !== -1 ? "&" : "?";
 	  			
 	  			if (uri.match(re)) {
-	  				uri.replace(re, '$1' + key + "=" + value + '$2');
-	  				history.pushState("", "", location.pathname + uri);
+	  				history.pushState("", "", location.pathname + uri.replace(re, '$1' + key + "=" + value + '$2'));
 	  			} else {
 	  				history.pushState("", "", location.pathname + separator + key + "=" + value);
 	  			}
