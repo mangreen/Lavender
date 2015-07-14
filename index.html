@@ -21,7 +21,10 @@
 	  			} else {
 	  				history.pushState("", "", location.pathname + separator + key + "=" + value);
 	  			}
-			}	
+			},
+			clear: function(){
+				location.search = "";
+			}
 		};
 		
 		var query = {
@@ -37,7 +40,7 @@
 		};
 		
 		console.log(query);
-		search.set("test", "aaa");
+		search.clear();
 		console.log("qs test:", location.search);
 	</script>
 </head>
