@@ -12,14 +12,15 @@
 			    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 			},
 			set: function(key, value) {
-				var uri = location.href;
+				var uri = location.search;
 	  			var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
 	  			var separator = uri.indexOf('?') !== -1 ? "&" : "?";
 	  			
 	  			if (uri.match(re)) {
-	  				location.href = uri.replace(re, '$1' + key + "=" + value + '$2');
+	  				uri.replace(re, '$1' + key + "=" + value + '$2');
+	  				history.pushState("", "", location.pathname + uri);
 	  			} else {
-	  				location.href = uri + separator + key + "=" + value;
+	  				history.pushState("", "", location.pathname + separator + key + "=" + value);
 	  			}
 			}	
 		};
