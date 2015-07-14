@@ -3,12 +3,25 @@
 	<meta charset="UTF-8">
 	<title>lavender 測試 landing page</title>
 	<script>
-		function getSearchStr(name) {
-		    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-		    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-		        results = regex.exec(location.search);
-		    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-		}
+	
+		var search = {
+			get: function(name) {
+			    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+			    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+			        results = regex.exec(location.search);
+			    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+			},
+			set: function(uri, key, value) {
+	  			var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+	  			var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+	  			
+	  			if (uri.match(re)) {
+	    			return uri.replace(re, '$1' + key + "=" + value + '$2');
+	  			} else {
+	    			return uri + separator + key + "=" + value;
+	  			}
+			}	
+		};
 		
 		var query = {
 			rl: document.referrer,
@@ -24,7 +37,7 @@
 		
 		console.log(query);
 		
-		console.log("qs test:", getSearchStr("test"));
+		console.log("qs test:", search.get("test"));
 	</script>
 </head>
 <html>
