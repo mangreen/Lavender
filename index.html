@@ -23,7 +23,7 @@
 	  			}
 			},
 			clear: function(){
-				location.search = "";
+				history.pushState("", "", location.pathname.split('?')[0]);
 			}
 		};
 		
