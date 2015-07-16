@@ -14,16 +14,20 @@
 			        results = regex.exec(location.search);
 			    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 			},
-			set: function(uri, key, value) {
+			set: function(key, value) {
+				var uri = location.search;
 	  			var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
 	  			var separator = uri.indexOf('?') !== -1 ? "&" : "?";
 	  			
 	  			if (uri.match(re)) {
-	    			return uri.replace(re, '$1' + key + "=" + value + '$2');
+	  				history.pushState("", "", location.pathname + uri.replace(re, '$1' + key + "=" + value + '$2'));
 	  			} else {
-	    			return uri + separator + key + "=" + value;
+	  				history.pushState("", "", location.pathname + separator + key + "=" + value);
 	  			}
-			}	
+			},
+			clear: function(){
+				history.pushState("", "", location.pathname.split('?')[0]);
+			}
 		};
 		
 		var query = {
