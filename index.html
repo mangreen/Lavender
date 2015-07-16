@@ -2,6 +2,9 @@
 <head>
 	<meta charset="UTF-8">
 	<title>lavender 測試 landing page</title>
+
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/js.cookie.js"></script>
 	<script>
 	
 		var search = {
@@ -38,6 +41,8 @@
 		console.log(query);
 		
 		console.log("qs test:", search.get("test"));
+
+		console.log("_psk_cid", Cookies.get('_psk_cid'), Cookies.get('_psk_impid'), Cookies.get('_psk_ctvid'));
 	</script>
 </head>
 <html>
