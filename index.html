@@ -2,55 +2,99 @@
 <head>
 	<meta charset="UTF-8">
 	<title>lavender 測試 landing page</title>
-
+	<link rel="stylesheet" href="/lavender/css/bootstrap.min.css">
 	<script src="/lavender/js/jquery.min.js"></script>
+	<script src="/lavender/js/bootstrap.min.js"></script>
 	<script src="/lavender/js/js.cookie.js"></script>
 	<script>
-	
-		var search = {
-			get: function(name) {
-			    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-			    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-			        results = regex.exec(location.search);
-			    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-			},
-			set: function(key, value) {
-				var uri = location.search;
-	  			var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
-	  			var separator = uri.indexOf('?') !== -1 ? "&" : "?";
-	  			
-	  			if (uri.match(re)) {
-	  				history.pushState("", "", location.pathname + uri.replace(re, '$1' + key + "=" + value + '$2'));
-	  			} else {
-	  				history.pushState("", "", location.pathname + separator + key + "=" + value);
-	  			}
-			},
-			clear: function(){
-				history.pushState("", "", location.pathname.split('?')[0]);
-			}
-		};
-		
-		var query = {
-			rl: document.referrer,
-			sr: screen.width + "x" + screen.height, // screen resolution
-			dl: window.location.href, // ex. http://psk_.com/about
-			dp: window.location.pathname, // ex. /about
-			ul: navigator.language || navigator.userLanguage, //user langage
-			sd: screen.colorDepth + "-bit", // color depth
-			dt: document.title, // html title
-			ctime: (new Date()).toISOString(), // client timestamp
-			z: Math.random() // cache buster,
-		};
-		
-		console.log(query);
-		
-		console.log("qs test:", search.get("test"));
+		(function(i, s, o, g, r, a, m) {
+			i['PADnalyticsObject'] = r;
+			i[r] = i[r] || function() {
+				(i[r].q = i[r].q || []).push(arguments)
+			}, i[r].l = 1 * new Date();
+			a = s.createElement(o),
+			m = s.getElementsByTagName(o)[0];
+			a.async = 1;
+			a.src = g;
+			m.parentNode.insertBefore(a, m)
+		})(window, document, 'script', '//compliance.punwave.com/analytics.js', 'pad');
 
-		console.log("_psk_cid", Cookies.get('_psk_cid'), Cookies.get('_psk_impid'), Cookies.get('_psk_ctvid'));
+		pad('create');
+
+		function sendPageview(){
+			pad('send', 'pageview');
+			console.log("pageview");
+		}
+		function sendImpression(){
+			var impid = $('#impid').val();
+			var ctvid = $('#ctvid').val();
+			pad('send', 'impression', {
+				'impid': impid,
+				'ctvid': ctvid
+			});
+			console.log("sendImpression");
+		}
+		function sendClick(id){
+			pad('send', 'click', {
+				'eid': id
+			});
+			console.log("sendClick");
+		}
+		function sendDonate(money){
+			pad('send', 'click', {
+				'eid': money
+			});
+			console.log("sendDonate");
+		}
 	</script>
 </head>
 <html>
 	<body>
-		<button type="button" onclick="console.log('button clicked')">Click Me!</button>
+		<h1>Lavender Landing Page Demo</h1>>
+		<div class="col-sm-12">
+			<label class="col-sm-12">Send Pageview Event</label>
+			<button class="btn btn-primary" onClick="sendPageview()">Pageview</button>
+			
+			<hr>
+		</div>
+
+		<div class="col-sm-12">
+			<label class="col-sm-12">Send Impression Event</label>
+			<form class="form-inline">
+				<div class="form-group">
+					<div class="input-group">
+		      			<span class="input-group-addon">Impression ID</span>
+		      			<input type="text" class="form-control" id="impid" value="imp12345">
+		    		</div>
+	    		</div>
+	    		<div class="form-group">
+					<div class="input-group">
+		      			<span class="input-group-addon">Creative ID</span>
+		      			<input type="text" class="form-control" id="ctvid"  value="ctv99999">
+		    		</div>
+	    		</div>
+    		</form>
+    		<br>
+			<button class="btn btn-primary" onClick="sendImpression()">Impression</button>
+			
+			<hr>
+		</div>
+		
+
+		<div class="col-sm-12">
+			<label class="col-sm-12">Send Click Event</label>
+			<button class="btn btn-primary" onClick="sendClick('A')">按鈕A</button>
+			<button class="btn btn-primary" onClick="sendClick('B')">按鈕B</button>
+			
+			<hr>
+		</div>
+
+		<div class="col-sm-12">
+			<label class="col-sm-12">Send Donate Event</label>
+			<button class="btn btn-primary" onClick="sendDonate(100)">捐款100</button>
+			<button class="btn btn-primary" onClick="sendDonate(100)">捐款200</button>
+
+			<hr>
+		</div>
 	</body>
 </html>
